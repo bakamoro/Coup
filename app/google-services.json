@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183293756244",
+    "project_id": "coup-f2efa",
+    "storage_bucket": "coup-f2efa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183293756244:android:ed52adb81e2266758bbec1",
+        "android_client_info": {
+          "package_name": "com.example.coup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183293756244-aime3049f5ftomu1ff4qo4fha2q4ask9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoEy2U0IsvNAVpnYeETMf619OUuJi-Hdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183293756244-aime3049f5ftomu1ff4qo4fha2q4ask9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

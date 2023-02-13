@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Coup</string>
+    <string name="CaptainAction" type="string">Actions :
+        Steal two coins from a chosen Opponent
+        Block steal
+    </string>
+    <string name="AmbassadorAction" type="string">Actions :
+        Changing two cards from deck
+        Block steal
+    </string>
+    <string name="ContessaAction" type="string">Actions :
+        Block assassination
+    </string>
+    <string name="DukeAction" type="string">Actions :
+        Take 3 coins fro the bank
+        Stop Opponent from taking two coins from bank
+    </string>
+    <string name="AssassinAction" type="string">Actions :
+        Assassin Opponent with 3 coins
+    </string>
+    <string name="title_activity_main2">MainActivity2</string>
+</resources>
