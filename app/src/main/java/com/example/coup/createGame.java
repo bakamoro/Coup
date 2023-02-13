@@ -69,8 +69,6 @@ public class createGame extends AppCompatActivity {
     private void moveToGame() {
         FireStoreHelper fireStoreHelper = new FireStoreHelper(game_name, getApplicationContext());
         Game game = new Game();
-        gameActivity gameActivity = new gameActivity();
-        gameActivity.game = (game);
         fireStoreHelper.startFireStore(4, game);
 
         Toast.makeText(this, "game created", Toast.LENGTH_SHORT).show();

@@ -17,6 +17,7 @@ public class gameActivity extends AppCompatActivity {
         coupView.game_name = (getIntent().getStringExtra("game_name"));
         coupView.myPlayerName = fileHelper.readFromFile(getApplicationContext());
         coupView.game = game;
+        coupView.myPlayerNumber = (getIntent().getIntExtra("myPlayerNumber",coupView.myPlayerNumber));
     }
 
 }

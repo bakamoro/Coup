@@ -20,9 +20,9 @@ import java.util.TimerTask;
 public class waitingRoom extends AppCompatActivity {
 
 
-
     ProgressBar progressBar;
     String game_name;
+    int myPlayerNumber = 4;
     TextView waitOpponent;
     int count = 0;
     Timer timer;
@@ -36,7 +36,6 @@ public class waitingRoom extends AppCompatActivity {
         game_name = getIntent().getStringExtra("game_name");
 
         updateMoves();
-
 
         progressBar = findViewById(R.id.progress_bar);
         timer = new Timer();
@@ -58,11 +57,15 @@ public class waitingRoom extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 Game game = value.toObject(Game.class);
+                if(game.getNum_of_players()<myPlayerNumber){
+                    myPlayerNumber = game.getNum_of_players();
+                }
                 if(game.getNum_of_players() == game.getRequire_player_num()){
                     gameActivity gameActivity = new gameActivity();
                     gameActivity.game = game;
                     Intent intent = new Intent(waitingRoom.this,gameActivity.class);
                     intent.putExtra("game_name",game_name);
+                    intent.putExtra("myPlayerNumber",myPlayerNumber);
                     startActivity(intent);
                 }
                 else{

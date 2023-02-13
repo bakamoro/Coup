@@ -32,6 +32,7 @@ public class CoupView extends View {
     private PersonalBank personalBank = new PersonalBank();
     private boolean myTurn = true,drawBankDetails = false;//TODO: change -> = true
     String game_name,myPlayerName;
+    int myPlayerNumber;
     Game game;
 
     public CoupView(Context context) {
