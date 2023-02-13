@@ -23,7 +23,6 @@ public class waitingRoom extends AppCompatActivity {
 
     ProgressBar progressBar;
     String game_name;
-    int number_of_players;
     TextView waitOpponent;
     int count = 0;
     Timer timer;
@@ -35,7 +34,9 @@ public class waitingRoom extends AppCompatActivity {
         waitOpponent = findViewById(R.id.waitOpponent);
 
         game_name = getIntent().getStringExtra("game_name");
-        waitOpponent.setText(number_of_players + "/4 players");
+
+        updateMoves();
+
 
         progressBar = findViewById(R.id.progress_bar);
         timer = new Timer();
@@ -63,6 +64,9 @@ public class waitingRoom extends AppCompatActivity {
                     Intent intent = new Intent(waitingRoom.this,gameActivity.class);
                     intent.putExtra("game_name",game_name);
                     startActivity(intent);
+                }
+                else{
+                    waitOpponent.setText(game.getNum_of_players() + "/4 players");
                 }
             }
         });

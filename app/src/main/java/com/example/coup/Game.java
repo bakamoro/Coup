@@ -25,10 +25,10 @@ public class Game {
                 ,personalBank3 = new PersonalBank()
                 ,personalBank4 = new PersonalBank();
 
-        this.player1  = new Player(personalBank1,cards1[0],cards1[0]);
-        this.player2  = new Player(personalBank2,cards2[0],cards2[0]);
-        this.player3  = new Player(personalBank3,cards3[0],cards3[0]);
-        this.player4  = new Player(personalBank4,cards4[0],cards4[0]);
+        this.player1  = new Player(personalBank1,cards1[0],cards1[0], true);
+        this.player2  = new Player(personalBank2,cards2[0],cards2[0], false);
+        this.player3  = new Player(personalBank3,cards3[0],cards3[0], false);
+        this.player4  = new Player(personalBank4,cards4[0],cards4[0], false);
     }
 
     public int getNum_of_players() {

@@ -64,7 +64,9 @@ public class CoupView extends View {
                     redId = R.drawable.captain;
                     ThisCanvas.drawText("Steal two coins from a chosen opponent", padding * 5 + card_width, padding * 5, paint);
                     ThisCanvas.drawText("Block steal", padding * 5 + card_width, padding * 7, paint);
-                    drawCardsActionButton(2,"Steal","Block");
+                    if(myTurn) {
+                        drawCardsActionButton(2, "Steal", "Block");
+                    }
                     break;
                 }
                 case Ambassador: {
@@ -72,13 +74,17 @@ public class CoupView extends View {
                     ThisCanvas.drawText("Taking two cards from deck - ", padding * 5 + card_width, padding * 5, paint);
                     ThisCanvas.drawText("and choosing two to return to the deck", padding * 5 + card_width, padding * 7, paint);
                     ThisCanvas.drawText("Block steal", padding * 5 + card_width, padding * 9, paint);
-                    drawCardsActionButton(2,"Change","Block");
+                    if(myTurn) {
+                        drawCardsActionButton(2, "Change", "Block");
+                    }
                     break;
                 }
                 case Contessa: {
                     redId = R.drawable.contessa;
                     ThisCanvas.drawText("Block assassination", padding * 5 + card_width, padding * 5, paint);
-                    drawCardsActionButton(1,"Block",null);
+                    if(myTurn) {
+                        drawCardsActionButton(1, "Block", null);
+                    }
                     break;
                 }
                 case Duke: {
@@ -86,14 +92,17 @@ public class CoupView extends View {
                     ThisCanvas.drawText("Take 3 coins fro the bank", padding * 5 + card_width, padding * 5, paint);
                     ThisCanvas.drawText("Stop Opponent from taking -", padding * 5 + card_width, padding * 7, paint);
                     ThisCanvas.drawText("two coins from bank", padding * 5 + card_width, padding * 9, paint);
-                    drawCardsActionButton(2,"3 coins","Stop");
+                    if(myTurn) {
+                        drawCardsActionButton(2, "3 coins", "Stop");
+                    }
                     break;
                 }
                 case Assassin: {
                     redId = R.drawable.assasain;
                     ThisCanvas.drawText("Assassin Opponent with 3 coins", padding * 5 + card_width, padding * 5, paint);
-
-                    drawCardsActionButton(1,"Assassin",null);
+                    if(myTurn) {
+                        drawCardsActionButton(1, "Assassin", null);
+                    }
                     break;
                 }
             }
