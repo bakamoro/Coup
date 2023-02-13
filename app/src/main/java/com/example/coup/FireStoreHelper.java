@@ -26,9 +26,9 @@ public class FireStoreHelper {
         this.context = context;
     }
     public void startFireStore(int requirePlayersNumber,Game game) {
-
         Map<String, Object> coupGame = new HashMap<>();
         coupGame.put("require players number",requirePlayersNumber);
+        coupGame.put("number of players",1);
         db.collection(collectionPath).document(game_name)
                 .set(coupGame)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -46,9 +46,13 @@ public class FireStoreHelper {
 
     }
     public void addMove(String color,String chessMove){
-        Map<String, Object> data = new HashMap<>();
-        data.put(color,chessMove);
+        Map<String, Object> coupGame = new HashMap<>();
+        coupGame.put(color,chessMove);
         //TODO: addMove -> data
-        db.collection(collectionPath).document(game_name).set(data, SetOptions.merge());
+        db.collection(collectionPath).document(game_name).set(coupGame, SetOptions.merge());
+    }
+    public void updateNumber_of_players(int number_of_players){
+        Map<String, Object> coupGame = new HashMap<>();
+        coupGame.put("number of players",number_of_players);
     }
 }

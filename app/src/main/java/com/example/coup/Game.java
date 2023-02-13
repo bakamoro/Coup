@@ -13,4 +13,20 @@ public class Game {
         this.player4 = player4;
         this.deck = deck;
     }
+    public Game(){
+        this.deck = new Deck();
+        Card[] cards1 = deck.TakeTwoCards()
+                ,cards2 = deck.TakeTwoCards()
+                ,cards3 = deck.TakeTwoCards()
+                ,cards4 = deck.TakeTwoCards();
+        PersonalBank personalBank1 = new PersonalBank()
+                ,personalBank2 = new PersonalBank()
+                ,personalBank3 = new PersonalBank()
+                ,personalBank4 = new PersonalBank();
+
+        this.player1  = new Player(personalBank1,cards1[0],cards1[0]);
+        this.player2  = new Player(personalBank2,cards2[0],cards2[0]);
+        this.player3  = new Player(personalBank3,cards3[0],cards3[0]);
+        this.player4  = new Player(personalBank4,cards4[0],cards4[0]);
+    }
 }
