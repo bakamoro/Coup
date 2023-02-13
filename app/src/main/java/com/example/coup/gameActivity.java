@@ -6,23 +6,17 @@ import android.os.Bundle;
 
 public class gameActivity extends AppCompatActivity {
 
-    private Game game;
+    Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        FileHelper fileHelper = new FileHelper();
         CoupView coupView = new CoupView(this);
-//        coupView.setGame_name(getIntent().getStringExtra("game_name"));
-        coupView.setGame_name("t");
-        coupView.setMyPlayerName(getIntent().getStringExtra("MyPlayerName"));
+        coupView.game_name = (getIntent().getStringExtra("game_name"));
+        coupView.myPlayerName = fileHelper.readFromFile(getApplicationContext());
+        coupView.game = game;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
 }

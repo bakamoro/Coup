@@ -9,6 +9,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -26,11 +28,10 @@ public class FireStoreHelper {
         this.context = context;
     }
     public void startFireStore(int requirePlayersNumber,Game game) {
-        Map<String, Object> coupGame = new HashMap<>();
-        coupGame.put("require players number",requirePlayersNumber);
-        coupGame.put("number of players",1);
+        game.setRequire_player_num(requirePlayersNumber);
+        game.setNum_of_players(1);
         db.collection(collectionPath).document(game_name)
-                .set(coupGame)
+                .set(game)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -51,8 +52,17 @@ public class FireStoreHelper {
         //TODO: addMove -> data
         db.collection(collectionPath).document(game_name).set(coupGame, SetOptions.merge());
     }
-    public void updateNumber_of_players(int number_of_players){
-        Map<String, Object> coupGame = new HashMap<>();
-        coupGame.put("number of players",number_of_players);
+    public void updateNumber_of_players(int number_of_players,Game game){
+        game.setNum_of_players(number_of_players);
+        db.collection(collectionPath).document(game_name).set(game);
+//        DocumentReference docRef = db.collection(collectionPath).document(game_name);
+//        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                Game game = documentSnapshot.toObject(Game.class);
+//                game.setNum_of_players(number_of_players);
+//                db.collection(collectionPath).document(game_name).set(game);
+//            }
+//        });
     }
 }

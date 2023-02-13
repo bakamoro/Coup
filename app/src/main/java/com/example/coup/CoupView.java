@@ -31,7 +31,8 @@ public class CoupView extends View {
     private Card[] myCard = deck.TakeTwoCards();
     private PersonalBank personalBank = new PersonalBank();
     private boolean myTurn = true,drawBankDetails = false;//TODO: change -> = true
-    private String game_name,myPlayerName;
+    String game_name,myPlayerName;
+    Game game;
 
     public CoupView(Context context) {
         super(context);
@@ -99,9 +100,6 @@ public class CoupView extends View {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), redId);
             ThisCanvas.drawBitmap(bitmap, null, new Rect(padding * 2, padding * 2, padding * 2 + card_width, padding * 2 + card_height), null);
         }
-
-        FireStoreHelper fireStoreHelper = new FireStoreHelper(game_name,getContext());
-        fireStoreHelper.addMove("blue","kkk");
     }
 
     private void drawCardsActionButton(int numButton,String ActionName1,String ActionName2) {
@@ -406,7 +404,7 @@ public class CoupView extends View {
     }
 
     public void updateMoves(){
-        if(myTurn) {
+        if(myTurn && game_name != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Coup games").document(game_name).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
@@ -443,12 +441,5 @@ public class CoupView extends View {
     private int getVieHeight() {
         DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
         return metrics.heightPixels;
-    }
-    public void setGame_name(String game_name){
-        this.game_name = game_name;
-    }
-
-    public void setMyPlayerName(String myPlayerName) {
-        this.myPlayerName = myPlayerName;
     }
 }

@@ -6,7 +6,8 @@ public class Game {
     private Player player3;
     private Player player4;
     private Deck deck;
-    public Game(Player player1,Player player2,Player player3,Player player4,Deck deck){
+    private int num_of_players,require_player_num;
+    public Game(Player player1, Player player2, Player player3, Player player4, Deck deck){
         this.player1 = player1;
         this.player2 = player2;
         this.player3 = player3;
@@ -28,5 +29,21 @@ public class Game {
         this.player2  = new Player(personalBank2,cards2[0],cards2[0]);
         this.player3  = new Player(personalBank3,cards3[0],cards3[0]);
         this.player4  = new Player(personalBank4,cards4[0],cards4[0]);
+    }
+
+    public int getNum_of_players() {
+        return num_of_players;
+    }
+
+    public void setNum_of_players(int num_of_players) {
+        this.num_of_players = num_of_players;
+    }
+
+    public int getRequire_player_num() {
+        return require_player_num;
+    }
+
+    public void setRequire_player_num(int require_player_num) {
+        this.require_player_num = require_player_num;
     }
 }

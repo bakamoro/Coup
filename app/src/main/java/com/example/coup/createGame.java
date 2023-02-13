@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,7 +57,7 @@ public class createGame extends AppCompatActivity {
 //                        else Toast.makeText(createGame.this,"game is full",Toast.LENGTH_LONG).show();
                     }
                     else {
-                        moveToGame(1);
+                        moveToGame();
                     }
                 } else {
 //                    Log.d(TAG, "get failed with ", task.getException());
@@ -67,18 +66,18 @@ public class createGame extends AppCompatActivity {
         });
     }
 
-    private void moveToGame(int number_of_players) {
+    private void moveToGame() {
         FireStoreHelper fireStoreHelper = new FireStoreHelper(game_name, getApplicationContext());
         Game game = new Game();
         gameActivity gameActivity = new gameActivity();
-        gameActivity.setGame(game);
+        gameActivity.game = (game);
         fireStoreHelper.startFireStore(4, game);
 
         Toast.makeText(this, "game created", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(createGame.this, waitingRoom.class);
         intent.putExtra("game_name", game_name);
-        intent.putExtra("number of players", number_of_players);
+        intent.putExtra("number of players", 1);
         startActivity(intent);
         finish();
     }
