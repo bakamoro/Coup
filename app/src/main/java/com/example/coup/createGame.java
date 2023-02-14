@@ -15,10 +15,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class createGame extends AppCompatActivity {
     EditText textView;
     String game_name;
+    private boolean gameIsExist = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,32 +41,25 @@ public class createGame extends AppCompatActivity {
         TextView textView = findViewById(R.id.gameNameText);
         String game_name = textView.getText().toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("chess games").document(game_name);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Toast.makeText(createGame.this, "game is already exist", Toast.LENGTH_SHORT).show();
-
-                        //TODO: להזיז את הקוד לjoin
-//                        if((int)document.get("number of player") < 4) {
-//                            if(document.get("number of player") == null){
-//                                moveToGame(1);
-//                            }
-//                            moveToGame((int)document.get("number of player")+1);
-//                        }
-//                        else Toast.makeText(createGame.this,"game is full",Toast.LENGTH_LONG).show();
+        db.collection("Coup games")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(game_name .equals(document.getId())){
+                                    Toast.makeText(createGame.this, "game is already exist", Toast.LENGTH_SHORT).show();
+                                    gameIsExist = true;
+                                }
+                            }
+                            if(!gameIsExist) {
+                                moveToGame();
+                            }
+                        } else {
+                        }
                     }
-                    else {
-                        moveToGame();
-                    }
-                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
+                });
     }
 
     private void moveToGame() {
