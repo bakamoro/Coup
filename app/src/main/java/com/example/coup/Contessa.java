@@ -10,12 +10,12 @@ public class Contessa extends Card{
     }
 
     @Override
-    void attack() {
+    void attack(Game game,int myPlayerNumber) {
 
     }
 
     @Override
-    void defend() {
+    void defend(Game game,int myPlayerNumber) {
 
     }
 }

@@ -261,26 +261,26 @@ public class CoupView extends View {
             switch (CardDetailsType) {
                 case Duke: {
                     Duke duke = new Duke();
-                    duke.attack();
+                    duke.attack(game,myPlayerNumber);
                     break;
                 }
                 case Assassin: {
                     Assassin assassin = new Assassin();
-                    assassin.attack();
+                    assassin.attack(game,myPlayerNumber);
                     break;
                 }
                 case Ambassador: {
                     Ambassador ambassador = new Ambassador();
-                    ambassador.attack();
+                    ambassador.attack(game,myPlayerNumber);
                     break;
                 }
                 case Captain:
                     Captain captain = new Captain();
-                    captain.attack();
+                    captain.attack(game,myPlayerNumber);
                     break;
                 case Contessa: {
                     Contessa contessa = new Contessa();
-                    contessa.defend();
+                    contessa.defend(game,myPlayerNumber);
                     break;
                 }
             }
@@ -297,19 +297,19 @@ public class CoupView extends View {
             switch (CardDetailsType) {
                 case Captain: {
                     Captain captain = new Captain();
-                    captain.defend();
+                    captain.defend(game,myPlayerNumber);
                     break;
                 }
                 case Ambassador: {
                     Ambassador ambassador = new Ambassador();
-                    ambassador.defend();
+                    ambassador.defend(game,myPlayerNumber);
                     break;
                 }
                 case Contessa:
                     break;
                 case Duke: {
                     Duke duke = new Duke();
-                    duke.defend();
+                    duke.defend(game,myPlayerNumber);
                     break;
                 }
                 case Assassin: {

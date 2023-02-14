@@ -25,9 +25,9 @@ public abstract class Card {
         this.expose = expose;
     }
 
-    abstract void attack();
+    abstract void attack(Game game,int myPlayerNumber);
 
-    abstract void defend();
+    abstract void defend(Game game,int myPlayerNumber);
 
 }
 
