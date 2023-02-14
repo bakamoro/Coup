@@ -53,10 +53,7 @@ public class joinGame extends AppCompatActivity{
     }
 
     public void JoinQuickGame(View view) {
-        int i = 3;
-        for (;i>0;i--) {
-            JoinQuickGameByNumber(i);
-        }
+        JoinQuickGameByNumber(3);
     }
 
     private void JoinQuickGameByNumber(int i) {
@@ -78,6 +75,9 @@ public class joinGame extends AppCompatActivity{
                             }
                         }
                         else {
+                            if(i != 1) {
+                                JoinQuickGameByNumber(i - 1);
+                            }
                         }
                     }
                 });
