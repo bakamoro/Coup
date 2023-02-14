@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/activity_choose_game.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/activity_create_game.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_create_or_join_game.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_game.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_join_specific_game.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_join_specific_or_random_game.xml" value="0.2891891891891892" />
+        <entry key="app/src/main/res/layout/activity_list_view.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_start_screen.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_waiting_romm.xml" value="0.1890625" />

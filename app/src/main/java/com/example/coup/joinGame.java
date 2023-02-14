@@ -85,6 +85,6 @@ public class joinGame extends AppCompatActivity{
 
     public void ChooseGame(View view) {
         Intent intent = new Intent(this,chooseGame.class);
-
+        startActivity(intent);
     }
 }
