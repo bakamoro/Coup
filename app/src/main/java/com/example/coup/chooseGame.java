@@ -25,7 +25,9 @@ import java.util.LinkedList;
 
 public class chooseGame extends AppCompatActivity {
 
-    String allGamesNames[],allGamesNamesTemp[];
+    String allGames[],
+            allGamesNames[],allGamesNamesTemp[]
+            , allGamesDetails[], allGamesDetailsTemp[];
     LinkedList<String> all = new LinkedList<String>();
     ListView listView;
     int allGamesNamesSize = 0;
@@ -47,6 +49,7 @@ public class chooseGame extends AppCompatActivity {
 
     private void SetAllGamesNames() {
         allGamesNamesTemp = new String[all.size()];
+        allGamesDetailsTemp = new String[all.size()];
         for (int i = 0;all.size()>0;i++){
             String game_name = all.pop();
             isGameFull(game_name,i);
@@ -129,10 +132,13 @@ public class chooseGame extends AppCompatActivity {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Game game = documentSnapshot.toObject(Game.class);
                                 if (game.getNum_of_players() < game.getRequire_player_num()) {
-                                    allGamesNamesTemp[allGamesNamesSize] = game_name + "   " + game.getNum_of_players() + "/" + game.getRequire_player_num();
+                                    allGamesNamesTemp[allGamesNamesSize] = game_name;
+                                    allGamesDetailsTemp[allGamesNamesSize] =  "   " + game.getNum_of_players() + "/" + game.getRequire_player_num();
                                     allGamesNamesSize++;
                                     insertToAllGamesNames(allGamesNamesTemp,allGamesNamesSize);
-                                    ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(chooseGame.this,R.layout.activity_list_view,R.id.textView,allGamesNames);
+                                    insertToAllGamesDetails(allGamesDetailsTemp,allGamesNamesSize);
+                                    insertToAllGames();
+                                    ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(chooseGame.this,R.layout.activity_list_view,R.id.textView,allGames);
                                     listView.setAdapter(stringArrayAdapter);
                                 }
                             }
@@ -154,4 +160,18 @@ public class chooseGame extends AppCompatActivity {
             allGamesNames[j] = allGamesNamesTemp[j];
         }
     }
+    private void insertToAllGamesDetails(String[] allGamesDetailsTemp, int i) {
+        allGamesDetails= new String[(i)];
+        for (int j = 0;j<i;j++){
+            allGamesDetails[j] = allGamesDetailsTemp[j];
+        }
+    }
+    private void insertToAllGames() {
+        int i = allGamesNames.length;
+        allGames = new String[i];
+        for (int j = 0;j<i;j++){
+            allGames[j] = allGamesNames[j] + allGamesDetails[j] ;
+        }
+    }
+
 }
