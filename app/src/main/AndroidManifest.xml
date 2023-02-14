@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".chooseGame"
+            android:exported="false" />
+        <activity
             android:name=".waitingRoom"
             android:exported="false" />
         <activity
@@ -25,7 +28,7 @@
             android:name=".joinSpecificGame"
             android:exported="false" />
         <activity
-            android:name=".joinSpecificOrRandomGame"
+            android:name=".joinGame"
             android:exported="false" />
         <activity
             android:name=".createGame"

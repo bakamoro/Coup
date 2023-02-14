@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".joinSpecificOrRandomGame"
+    tools:context=".joinGame"
     android:orientation="vertical"
     android:background="@color/black"
     android:backgroundTint="#000000"
@@ -35,9 +35,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:backgroundTint="#000000"
-        android:text="join random game"
+        android:text="join quick game"
         android:textColor="#178A1E"
-        android:onClick="JoinRandomGame"/>
+        android:onClick="JoinQuickGame"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

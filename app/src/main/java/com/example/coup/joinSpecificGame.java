@@ -30,38 +30,41 @@ public class joinSpecificGame extends AppCompatActivity {
         TextView textView = findViewById(R.id.gameNameText);
         String game_name = textView.getText().toString();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("Coup games").document(game_name);
+        if(game_name!= null && !game_name.equals("")) {
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("Coup games").document(game_name);
 
-                        DocumentReference docRef = db.collection("Coup games").document(game_name);
-                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                Game game = documentSnapshot.toObject(Game.class);
-                                if(game.getNum_of_players()<game.getRequire_player_num()){
-                                    moveToGame(game_name,(game.getNum_of_players()+1),game);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            DocumentReference docRef = db.collection("Coup games").document(game_name);
+                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Game game = documentSnapshot.toObject(Game.class);
+                                    if (game.getNum_of_players() < game.getRequire_player_num()) {
+                                        moveToGame(game_name, (game.getNum_of_players() + 1), game);
+                                    } else {
+                                        Toast.makeText(joinSpecificGame.this, "game is full", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                else {
-                                    Toast.makeText(joinSpecificGame.this,"game is full",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                            });
 //                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Toast.makeText(joinSpecificGame.this, "there is no such game", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(joinSpecificGame.this,"there is no such game",Toast.LENGTH_SHORT).show();
-                    }
-                } else {
 //                    Log.d(TAG, "get failed with ", task.getException());
+                    }
                 }
-            }
-        });
+            });
+        }
+        else Toast.makeText(this,"please enter game's name",Toast.LENGTH_SHORT).show();
     }
 
     private void moveToGame(String game_name, int num_of_players, Game game) {

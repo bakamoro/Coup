@@ -20,7 +20,7 @@ public class CreateOrJoinGame extends AppCompatActivity {
     }
 
     public void joinGema(View view) {
-        Intent intent = new Intent(this, joinSpecificOrRandomGame.class);
+        Intent intent = new Intent(this, joinGame.class);
         startActivity(intent);
     }
 }
