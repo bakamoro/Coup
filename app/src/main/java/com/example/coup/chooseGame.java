@@ -28,6 +28,7 @@ public class chooseGame extends AppCompatActivity {
     String allGamesNames[],allGamesNamesTemp[];
     LinkedList<String> all = new LinkedList<String>();
     ListView listView;
+    int allGamesNamesSize = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,8 +129,9 @@ public class chooseGame extends AppCompatActivity {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Game game = documentSnapshot.toObject(Game.class);
                                 if (game.getNum_of_players() < game.getRequire_player_num()) {
-                                    allGamesNamesTemp[i] = game_name;
-                                    insertToallGamesNames(allGamesNamesTemp,i+1);
+                                    allGamesNamesTemp[allGamesNamesSize] = game_name + "   " + game.getNum_of_players() + "/" + game.getRequire_player_num();
+                                    allGamesNamesSize++;
+                                    insertToAllGamesNames(allGamesNamesTemp,allGamesNamesSize);
                                     ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(chooseGame.this,R.layout.activity_list_view,R.id.textView,allGamesNames);
                                     listView.setAdapter(stringArrayAdapter);
                                 }
@@ -146,7 +148,7 @@ public class chooseGame extends AppCompatActivity {
 
     }
 
-    private void insertToallGamesNames(String[] allGamesNamesTemp, int i) {
+    private void insertToAllGamesNames(String[] allGamesNamesTemp, int i) {
         allGamesNames= new String[(i)];
         for (int j = 0;j<i;j++){
             allGamesNames[j] = allGamesNamesTemp[j];
