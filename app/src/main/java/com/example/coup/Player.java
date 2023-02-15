@@ -18,4 +18,8 @@ public class Player {
     public void setTurn(boolean turn) {
         isTurn = turn;
     }
+
+    public Card[] getCards() {
+        return cards;
+    }
 }

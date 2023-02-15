@@ -46,4 +46,21 @@ public class Game {
     public void setRequire_player_num(int require_player_num) {
         this.require_player_num = require_player_num;
     }
+    public Player getMyPlayer(int myPlayerNumber) {
+        switch (myPlayerNumber){
+            case 1:{
+                return player1;
+            }
+            case 2:{
+                return player2;
+            }
+            case 3:{
+                return player3;
+            }
+            case 4:{
+                return player4;
+            }
+        }
+        return player1;
+    }
 }
