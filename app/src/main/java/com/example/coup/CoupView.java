@@ -98,7 +98,7 @@ public class CoupView extends View {
                     ThisCanvas.drawText("Stop Opponent from taking -", padding * 5 + card_width, padding * 7, paint);
                     ThisCanvas.drawText("two coins from bank", padding * 5 + card_width, padding * 9, paint);
                     if(myTurn) {
-                        drawCardsActionButton(2, "3 coins", "Stop");
+                        drawCardsActionButton(2, "Stop","3 coins");
                     }
                     break;
                 }
@@ -351,8 +351,13 @@ public class CoupView extends View {
                 case Contessa:
                     break;
                 case Duke: {
-                    Duke duke = new Duke();
-                    duke.defend(game,myPlayerNumber);
+                    if(game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() <= 7) {
+                        Duke duke = new Duke();
+                        duke.defend(game, myPlayerNumber);
+                    }
+                    else{
+                        Toast.makeText(getContext(),"you can't have more then 10 coins",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 }
                 case Assassin: {

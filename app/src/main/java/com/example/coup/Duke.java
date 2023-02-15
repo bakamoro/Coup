@@ -15,6 +15,6 @@ public class Duke extends Card{
     }
     @Override
     public void defend(Game game,int myPlayerNumber){
-
+        game.getPlayer(myPlayerNumber).getPersonalBank().addCoins(3);
     }
 }
