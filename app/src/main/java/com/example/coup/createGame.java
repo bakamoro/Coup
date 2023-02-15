@@ -21,7 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class createGame extends AppCompatActivity {
     EditText textView;
     String game_name;
-    private boolean gameIsExist = false;
+    private boolean gameIsExist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,7 @@ public class createGame extends AppCompatActivity {
     }
 
     public void createGame(View view) {
+        gameIsExist = false;
         game_name = textView.getText().toString();
         if(game_name!= null && !game_name.equals("")) {
             isGameExist();
