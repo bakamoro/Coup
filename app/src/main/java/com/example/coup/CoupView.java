@@ -1,7 +1,5 @@
 package com.example.coup;
 
-
-
 import static com.example.coup.gameActivity.game_name;
 import static com.example.coup.gameActivity.myPlayerNumber;
 
@@ -69,7 +67,7 @@ public class CoupView extends View {
                     redId = R.drawable.captain;
                     ThisCanvas.drawText("Steal two coins from a chosen opponent", padding * 5 + card_width, padding * 5, paint);
                     ThisCanvas.drawText("Block steal", padding * 5 + card_width, padding * 7, paint);
-                    if(myTurn) {
+                    if(myTurn || game.getLastAction() == Actions.captain_steal_2_coins) {
                         drawCardsActionButton(2, "Steal", "Block");
                     }
                     break;
@@ -87,7 +85,7 @@ public class CoupView extends View {
                 case Contessa: {
                     redId = R.drawable.contessa;
                     ThisCanvas.drawText("Block assassination", padding * 5 + card_width, padding * 5, paint);
-                    if(myTurn) {
+                    if(myTurn || game.getLastAction() == Actions.assassin_assassin) {
                         drawCardsActionButton(1, "Block", null);
                     }
                     break;
@@ -97,7 +95,7 @@ public class CoupView extends View {
                     ThisCanvas.drawText("Take 3 coins fro the bank", padding * 5 + card_width, padding * 5, paint);
                     ThisCanvas.drawText("Stop Opponent from taking -", padding * 5 + card_width, padding * 7, paint);
                     ThisCanvas.drawText("two coins from bank", padding * 5 + card_width, padding * 9, paint);
-                    if(myTurn) {
+                    if(myTurn || game.getLastAction() == Actions.bank_take_2) {
                         drawCardsActionButton(2, "Stop","3 coins");
                     }
                     break;
