@@ -10,7 +10,7 @@ public class Duke extends Card{
     }
 
     @Override
-    public void attack(Game game,int myPlayerNumber){
+    public void attack(Game game,int myPlayerNumber,int victimPlayerNumber){
 
     }
     @Override

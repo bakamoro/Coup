@@ -33,6 +33,7 @@ public class CoupView extends View {
     String myPlayerName;
     Game game;
     private boolean isStartUp = true;
+    private int victimPlayerNumber;
 
     public CoupView(Context context) {
         super(context);
@@ -263,22 +264,22 @@ public class CoupView extends View {
             switch (CardDetailsType) {
                 case Duke: {
                     Duke duke = new Duke();
-                    duke.attack(game,myPlayerNumber);
+                    duke.attack(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
                 case Assassin: {
                     Assassin assassin = new Assassin();
-                    assassin.attack(game,myPlayerNumber);
+                    assassin.attack(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
                 case Ambassador: {
                     Ambassador ambassador = new Ambassador();
-                    ambassador.attack(game,myPlayerNumber);
+                    ambassador.attack(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
                 case Captain:
                     Captain captain = new Captain();
-                    captain.attack(game,myPlayerNumber);
+                    captain.attack(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 case Contessa: {
                     Contessa contessa = new Contessa();
