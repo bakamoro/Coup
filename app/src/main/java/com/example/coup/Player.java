@@ -22,4 +22,12 @@ public class Player {
     public Card[] getCards() {
         return cards;
     }
+
+    public PersonalBank getPersonalBank() {
+        return personalBank;
+    }
+
+    public void setPersonalBank(PersonalBank personalBank) {
+        this.personalBank = personalBank;
+    }
 }

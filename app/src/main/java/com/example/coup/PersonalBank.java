@@ -11,4 +11,8 @@ public class PersonalBank {
     public void addCoins(int num){
         coins.addCoins(num);
     }
+
+    public Coins getCoins() {
+        return coins;
+    }
 }

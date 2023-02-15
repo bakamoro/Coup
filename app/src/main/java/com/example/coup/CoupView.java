@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -165,18 +166,50 @@ public class CoupView extends View {
     }
 
     private void drawWords() {
+        int leftPlayerNumber = 0 , rightPlayerNumber = 0, abovePlayerNumber = 0 , bottomPlayerNumber = myPlayerNumber;
         Paint paint = new Paint();
         paint.setColor(Color.YELLOW);
         paint.setTextSize(35);
         ThisCanvas.drawText("X infinity", width/2-back_card_width/2, height/2+back_card_width+padding*2, paint);
         paint.setTextSize(padding*2);
-        ThisCanvas.drawText("X 2", width/2 + padding*2,height-(height-width)/2-back_card_height-padding - back_card_width/2 , paint);
 
-        ThisCanvas.drawText("X 2", width/2 + padding*2, (height-width)/2+back_card_height+back_card_width/2+padding*3 , paint);
+        switch (myPlayerNumber){
+            case 1:{
+                leftPlayerNumber = 2;
+                abovePlayerNumber = 3;
+                rightPlayerNumber = 4;
+                break;
+            }
+            case 2:{
+                leftPlayerNumber = 3;
+                abovePlayerNumber = 4;
+                rightPlayerNumber = 1;
+                break;
+            }
+            case 3:{
+                leftPlayerNumber = 4;
+                abovePlayerNumber = 1;
+                rightPlayerNumber = 2;
+                break;
+            }
+            case 4:{
+                leftPlayerNumber = 1;
+                abovePlayerNumber = 2;
+                rightPlayerNumber = 3;
+                break;
+            }
+        }
+        //bottom words
+        ThisCanvas.drawText("X " + game.getPlayer(bottomPlayerNumber).getPersonalBank().getCoins().getNumber(), width/2 + padding*2,height-(height-width)/2-back_card_height-padding - back_card_width/2 , paint);
 
-        ThisCanvas.drawText("X 2", back_card_height+padding*3, ((height)/2) +back_card_width, paint);
+        //above words
+        ThisCanvas.drawText("X " + game.getPlayer(abovePlayerNumber).getPersonalBank().getCoins().getNumber(), width/2 + padding*2, (height-width)/2+back_card_height+back_card_width/2+padding*3 , paint);
 
-        ThisCanvas.drawText("X 2",width-back_card_height-padding-back_card_width , ((height)/2) +back_card_width, paint);
+        //left words
+        ThisCanvas.drawText("X " + game.getPlayer(leftPlayerNumber).getPersonalBank().getCoins().getNumber(), back_card_height+padding*3, ((height)/2) +back_card_width, paint);
+
+        //right words
+        ThisCanvas.drawText("X " + game.getPlayer(rightPlayerNumber).getPersonalBank().getCoins().getNumber(),width-back_card_height-padding-back_card_width , ((height)/2) +back_card_width, paint);
     }
 
     private void drawBoard(){
@@ -206,10 +239,10 @@ public class CoupView extends View {
         drawMyCards();
     }
     private void drawMyCards(){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), game.getMyPlayer(myPlayerNumber).getCards()[0].getResId());
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), game.getPlayer(myPlayerNumber).getCards()[0].getResId());
         ThisCanvas.drawBitmap(bitmap,null,new Rect(width/2-padding - back_card_width,height-(height-width)/2-back_card_height-padding,width/2-padding ,height-(height-width)/2-padding),null);
 
-        bitmap = BitmapFactory.decodeResource(getResources(),game.getMyPlayer(myPlayerNumber).getCards()[1].getResId());
+        bitmap = BitmapFactory.decodeResource(getResources(),game.getPlayer(myPlayerNumber).getCards()[1].getResId());
         ThisCanvas.drawBitmap(bitmap,null,new Rect(width/2+padding ,height-(height-width)/2-back_card_height-padding,width/2+back_card_width+padding,height-(height-width)/2-padding),null);
     }
 
@@ -226,7 +259,8 @@ public class CoupView extends View {
                 return true;
             }
             if(isButtonPressed((int)event.getX(),(int)event.getY())){
-
+                invalidate();
+                return true;
             }
         }
         return true;
@@ -240,7 +274,10 @@ public class CoupView extends View {
         //bank's buttons
         //1 coin button
         if(x>= left && x<= right && y>= top && y<= bottom){
-
+            if(game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() > 9){
+                Toast.makeText(getContext(),"You have 10 coins You can't have more coins",Toast.LENGTH_SHORT).show();
+            }
+            else game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().addCoins(1);
             return true;
         }
         left = padding * 6 + card_height + card_width;
@@ -249,7 +286,10 @@ public class CoupView extends View {
         bottom = (height - width) / 2 - padding;
         //2 coin button
         if(x>= left && x<= right && y>= top && y<= bottom){
-
+            if(game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() > 8){
+                Toast.makeText(getContext(),"You can't have more coins than 10",Toast.LENGTH_SHORT).show();
+            }
+            else game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().addCoins(2);
             return true;
         }
 
@@ -423,7 +463,7 @@ public class CoupView extends View {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     game = value.toObject(Game.class);
-                    myTurn = game.getMyPlayer(myPlayerNumber).isTurn();
+                    myTurn = game.getPlayer(myPlayerNumber).isTurn();
                     isStartUp = false;
                     invalidate();
 

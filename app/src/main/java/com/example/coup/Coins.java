@@ -13,4 +13,12 @@ public class Coins {
     public void reduceCoins(int reduce){
         this.Number -= reduce;
     }
+
+    public int getNumber() {
+        return Number;
+    }
+
+    public void setNumber(int number) {
+        Number = number;
+    }
 }
