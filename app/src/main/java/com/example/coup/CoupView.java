@@ -1,8 +1,11 @@
 package com.example.coup;
 
 
+
+import static com.example.coup.gameActivity.game_name;
+import static com.example.coup.gameActivity.myPlayerNumber;
+
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,7 +17,6 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -27,13 +29,10 @@ public class CoupView extends View {
     private final int width = getVieWidth(),height = getVieHeight(), back_card_height = 200, back_card_width = back_card_height/2,padding = 20;
     private Canvas ThisCanvas;
     private CardType CardDetailsType = null;
-    private Deck deck = new Deck();
-    private Card[] myCard = deck.TakeTwoCards();
-    private PersonalBank personalBank = new PersonalBank();
     private boolean myTurn = true,drawBankDetails = false;//TODO: change -> = true
-    String game_name,myPlayerName;
-    int myPlayerNumber;
+    String myPlayerName;
     Game game;
+    private boolean isStartUp = true;
 
     public CoupView(Context context) {
         super(context);
@@ -44,14 +43,17 @@ public class CoupView extends View {
         super.onDraw(canvas);
         ThisCanvas = canvas;
         updateMoves();
-        drawBoard();
-        drawBackCards();
-        drawCards();
-        drawChips();
-        drawWords();
-        drawCardDetails(CardDetailsType);
-        drawBankDetails();
+        if(game!=null) {
+            drawBoard();
+            drawBackCards();
+            drawCards();
+            drawChips();
+            drawWords();
+            drawCardDetails(CardDetailsType);
+            drawBankDetails();
+        }
     }
+
 
     private void drawCardDetails(CardType cardType) {
         if(cardType != null) {
@@ -203,10 +205,10 @@ public class CoupView extends View {
         drawMyCards();
     }
     private void drawMyCards(){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), myCard[0].getResId());
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), game.getMyPlayer(myPlayerNumber).getCards()[0].getResId());
         ThisCanvas.drawBitmap(bitmap,null,new Rect(width/2-padding - back_card_width,height-(height-width)/2-back_card_height-padding,width/2-padding ,height-(height-width)/2-padding),null);
 
-        bitmap = BitmapFactory.decodeResource(getResources(),myCard[1].getResId());
+        bitmap = BitmapFactory.decodeResource(getResources(),game.getMyPlayer(myPlayerNumber).getCards()[1].getResId());
         ThisCanvas.drawBitmap(bitmap,null,new Rect(width/2+padding ,height-(height-width)/2-back_card_height-padding,width/2+back_card_width+padding,height-(height-width)/2-padding),null);
     }
 
@@ -414,21 +416,23 @@ public class CoupView extends View {
     }
 
     public void updateMoves(){
-        if(myTurn && game_name != null) {
+        if(!myTurn && game_name != null || (isStartUp&& game_name!= null) ){
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Coup games").document(game_name).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            db.collection("Coup games").document(game_name ).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                    if (value.get("Victory") != null) {
-                        if (value.get("Victory").equals("n")) {//TODO: change to a real thing
-                            Toast.makeText(getContext(), "The winner is you", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "please get out", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "The loser is you", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "HA HA HA HA", Toast.LENGTH_SHORT).show();
-                        }
-                        db.collection("Coup games").document(game_name).delete();
-                    }
+                    game = value.toObject(Game.class);
+
+//                    if (value.get("Victory") != null) {
+//                        if (value.get("Victory").equals("n")) {//TODO: change to a real thing
+//                            Toast.makeText(getContext(), "The winner is you", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "please get out", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(getContext(), "The loser is you", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "HA HA HA HA", Toast.LENGTH_SHORT).show();
+//                        }
+//                        db.collection("Coup games").document(game_name).delete();
+//                    }
                 }
             });
         }

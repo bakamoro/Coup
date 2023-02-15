@@ -79,9 +79,10 @@ public class chooseGame extends AppCompatActivity {
 
         Intent intent = new Intent(chooseGame.this, waitingRoom.class);;
         if(num_of_players == game.getRequire_player_num()){
-            gameActivity gameActivity = new gameActivity();
-            gameActivity.game = (game);
             intent = new Intent(chooseGame.this, gameActivity.class);
+            intent.putExtra("myPlayerNumber",num_of_players);
+
+
         }
         intent.putExtra("game_name", game_name);
         intent.putExtra("number of players", num_of_players);

@@ -6,18 +6,16 @@ import android.os.Bundle;
 
 public class gameActivity extends AppCompatActivity {
 
-    Game game;
+    static String game_name;
+    static int myPlayerNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        FileHelper fileHelper = new FileHelper();
-        CoupView coupView = new CoupView(this);
-        coupView.game_name = (getIntent().getStringExtra("game_name"));
-        coupView.myPlayerName = fileHelper.readFromFile(getApplicationContext());
-        coupView.game = game;
-        coupView.myPlayerNumber = (getIntent().getIntExtra("myPlayerNumber",coupView.myPlayerNumber));
+        game_name = (getIntent().getStringExtra("game_name"));
+        myPlayerNumber =  (getIntent().getIntExtra("myPlayerNumber",myPlayerNumber));
+
     }
 
 }

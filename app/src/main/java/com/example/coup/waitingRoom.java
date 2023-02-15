@@ -61,8 +61,6 @@ public class waitingRoom extends AppCompatActivity {
                     myPlayerNumber = game.getNum_of_players();
                 }
                 if(game.getNum_of_players() == game.getRequire_player_num()){
-                    gameActivity gameActivity = new gameActivity();
-                    gameActivity.game = game;
                     Intent intent = new Intent(waitingRoom.this,gameActivity.class);
                     intent.putExtra("game_name",game_name);
                     intent.putExtra("myPlayerNumber",myPlayerNumber);
