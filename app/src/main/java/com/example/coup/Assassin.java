@@ -11,6 +11,7 @@ public class Assassin extends Card{
 
     @Override
     public void attack(Game game,int myPlayerNumber,int victimPlayerNumber){
+        game.setLastAction(Actions.assassin_assassin);
 
     }
     @Override

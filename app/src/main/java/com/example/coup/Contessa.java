@@ -16,6 +16,7 @@ public class Contessa extends Card{
 
     @Override
     void defend(Game game,int myPlayerNumber) {
+        game.setLastAction(Actions.contessa_block_assassin);
 
     }
 }

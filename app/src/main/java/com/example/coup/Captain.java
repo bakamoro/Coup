@@ -11,9 +11,11 @@ public class Captain extends Card{
 
     @Override
     public void attack(Game game,int myPlayerNumber,int victimPlayerNumber){
+        game.setLastAction(Actions.captain_steal_2_coins);
 
     }
     @Override
     public void defend(Game game,int myPlayerNumber){
+        game.setLastAction(Actions.captain_block_steal_2_coins);
     }
 }

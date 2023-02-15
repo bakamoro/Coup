@@ -11,10 +11,12 @@ public class Duke extends Card{
 
     @Override
     public void attack(Game game,int myPlayerNumber,int victimPlayerNumber){
+        game.setLastAction(Actions.duke_block_gat_2_coins);
 
     }
     @Override
     public void defend(Game game,int myPlayerNumber){
         game.getPlayer(myPlayerNumber).getPersonalBank().addCoins(3);
+        game.setLastAction(Actions.duke_get_3_coins);
     }
 }
