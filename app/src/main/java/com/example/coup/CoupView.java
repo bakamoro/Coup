@@ -29,7 +29,7 @@ public class CoupView extends View {
     private final int width = getVieWidth(),height = getVieHeight(), back_card_height = 200, back_card_width = back_card_height/2,padding = 20;
     private Canvas ThisCanvas;
     private CardType CardDetailsType = null;
-    private boolean myTurn = true,drawBankDetails = false;//TODO: change -> = true
+    private boolean myTurn,drawBankDetails = false;
     String myPlayerName;
     Game game;
     private boolean isStartUp = true;
@@ -416,12 +416,15 @@ public class CoupView extends View {
     }
 
     public void updateMoves(){
-        if(!myTurn && game_name != null || (isStartUp&& game_name!= null) ){
+        if((isStartUp && game_name!= null) ){
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Coup games").document(game_name ).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     game = value.toObject(Game.class);
+                    myTurn = game.getMyPlayer(myPlayerNumber).isTurn();
+                    isStartUp = false;
+                    invalidate();
 
 //                    if (value.get("Victory") != null) {
 //                        if (value.get("Victory").equals("n")) {//TODO: change to a real thing
