@@ -6,6 +6,7 @@ public class Game {
     private Player player3;
     private Player player4;
     private Deck deck;
+    private String NameOfPlayer;
     private Actions lastAction;
     private int num_of_players,require_player_num;
     public Game(Player player1, Player player2, Player player3, Player player4, Deck deck){
@@ -71,5 +72,19 @@ public class Game {
 
     public void setLastAction(Actions lastAction) {
         this.lastAction = lastAction;
+    }
+    public Card[] TakeTwoCards(){
+        return deck.TakeTwoCards();
+    }
+    public void returnTwoCards(Card card1, Card card2){
+        deck.returnTwoCards(card1, card2);
+    }
+
+    public String getNameOfPlayer() {
+        return NameOfPlayer;
+    }
+
+    public void setNameOfPlayer(String nameOfPlayer) {
+        NameOfPlayer = nameOfPlayer;
     }
 }

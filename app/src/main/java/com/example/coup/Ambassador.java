@@ -15,6 +15,7 @@ public class Ambassador extends Card{
     }
     @Override
     public void defend(Game game,int myPlayerNumber){
+        game.getPlayer(myPlayerNumber).addCards(game.TakeTwoCards());
         game.setLastAction(Actions.ambassador_take_2_cards);
     }
 }

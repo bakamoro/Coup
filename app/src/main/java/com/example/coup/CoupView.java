@@ -462,7 +462,7 @@ public class CoupView extends View {
     public void updateMoves(){
         if((isStartUp && game_name!= null) ){
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Coup games").document(game_name ).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            db.collection("Coup games").document(game_name).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     game = value.toObject(Game.class);
