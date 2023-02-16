@@ -3,6 +3,8 @@ package com.example.coup;
 import static com.example.coup.gameActivity.game_name;
 import static com.example.coup.gameActivity.myPlayerNumber;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,10 +13,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,7 +37,11 @@ public class CoupView extends View {
     String myPlayerName;
     Game game;
     private boolean isStartUp = true;
+    private boolean TimerCalled = true;
     private int victimPlayerNumber;
+    private int time = 10;
+    private Paint p = new Paint();
+
 
     public CoupView(Context context) {
         super(context);
@@ -44,6 +53,10 @@ public class CoupView extends View {
         ThisCanvas = canvas;
         updateMoves();
         if(game!=null) {
+            if(TimerCalled){
+                drawTimer();
+//                TimerCalled = false;
+            }
             drawBoard();
             drawBackCards();
             drawCards();
@@ -51,6 +64,26 @@ public class CoupView extends View {
             drawWords();
             drawCardDetails(CardDetailsType);
             drawBankDetails();
+        }
+    }
+
+    private void drawTimer() {
+        if(CardDetailsType == null && time >= 0) {
+            if(time == 10){
+                p.setColor(Color.WHITE);
+            }
+            if(time == 5){
+                p.setColor(Color.RED);
+            }
+            p.setTextSize(40);
+            p.setTextAlign(Paint.Align.CENTER);
+            ThisCanvas.drawText("00:0" + time--, width / 2, 100, p);
+            try {
+                Thread.sleep(900);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            invalidate();
         }
     }
 

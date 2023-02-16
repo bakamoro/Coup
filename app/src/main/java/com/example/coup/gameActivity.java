@@ -13,6 +13,7 @@ public class gameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
 
         FileHelper fileHelper = new FileHelper();
         myPlayerName = fileHelper.readFromFile(getApplicationContext());

@@ -65,6 +65,7 @@ public class waitingRoom extends AppCompatActivity {
                     intent.putExtra("game_name",game_name);
                     intent.putExtra("myPlayerNumber",myPlayerNumber);
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     waitOpponent.setText(game.getNum_of_players() + "/4 players");
