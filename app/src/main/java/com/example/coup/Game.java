@@ -7,6 +7,7 @@ public class Game {
     private Player player4;
     private Deck deck;
     private Actions lastAction;
+    private int Turn;
     private int num_of_players,require_player_num;
     public Game(Player player1, Player player2, Player player3, Player player4, Deck deck){
         this.player1 = player1;
@@ -26,10 +27,11 @@ public class Game {
                 ,personalBank3 = new PersonalBank()
                 ,personalBank4 = new PersonalBank();
 
-        this.player1  = new Player(personalBank1,cards1[0],cards1[0], true);
-        this.player2  = new Player(personalBank2,cards2[0],cards2[0], false);
-        this.player3  = new Player(personalBank3,cards3[0],cards3[0], false);
-        this.player4  = new Player(personalBank4,cards4[0],cards4[0], false);
+        this.player1  = new Player(personalBank1,cards1[0],cards1[0]);
+        this.player2  = new Player(personalBank2,cards2[0],cards2[0]);
+        this.player3  = new Player(personalBank3,cards3[0],cards3[0]);
+        this.player4  = new Player(personalBank4,cards4[0],cards4[0]);
+        this.Turn = 1;
     }
 
     public int getNum_of_players() {
@@ -77,5 +79,16 @@ public class Game {
     }
     public void returnTwoCards(Card card1, Card card2){
         deck.returnTwoCards(card1, card2);
+    }
+
+    public int getTurn() {
+        return Turn;
+    }
+
+    public void passTurn(){
+        if(Turn == 4){
+            Turn = 1;
+        }
+        Turn++;
     }
 }

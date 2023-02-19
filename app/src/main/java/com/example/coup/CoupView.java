@@ -508,8 +508,11 @@ public class CoupView extends View {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     game = value.toObject(Game.class);
-                    myTurn = game.getPlayer(myPlayerNumber).isTurn();
                     isStartUp = false;
+                    if(game.getTurn() == myPlayerNumber){
+                        myTurn = true;
+                    }
+                    else myTurn = false;
                     invalidate();
 
 //                    if (value.get("Victory") != null) {
