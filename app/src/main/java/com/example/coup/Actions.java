@@ -2,7 +2,9 @@ package com.example.coup;
 
 public enum Actions {
     captain_steal_2_coins,
+    captain_steal_1_coins,
     captain_block_steal_2_coins,
+    captain_block_steal_1_coins,
     ambassador_take_2_cards,
     ambassador_block_steal_2_coins,
     contessa_block_assassin,
