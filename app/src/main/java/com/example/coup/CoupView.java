@@ -354,7 +354,7 @@ public class CoupView extends View {
                     break;
                 case Contessa: {
                     Contessa contessa = new Contessa();
-                    contessa.defend(game,myPlayerNumber);
+                    contessa.defend(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
             }
@@ -371,12 +371,12 @@ public class CoupView extends View {
             switch (CardDetailsType) {
                 case Captain: {
                     Captain captain = new Captain();
-                    captain.defend(game,myPlayerNumber);
+                    captain.defend(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
                 case Ambassador: {
                     Ambassador ambassador = new Ambassador();
-                    ambassador.defend(game,myPlayerNumber);
+                    ambassador.defend(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
                 case Contessa:
@@ -384,7 +384,7 @@ public class CoupView extends View {
                 case Duke: {
                     if(game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() <= 7) {
                         Duke duke = new Duke();
-                        duke.defend(game, myPlayerNumber);
+                        duke.defend(game, myPlayerNumber,victimPlayerNumber);
                     }
                     else{
                         Toast.makeText(getContext(),"you can't have more then 10 coins",Toast.LENGTH_SHORT).show();

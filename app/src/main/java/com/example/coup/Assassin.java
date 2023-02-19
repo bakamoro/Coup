@@ -15,6 +15,6 @@ public class Assassin extends Card{
 
     }
     @Override
-    public void defend(Game game,int myPlayerNumber){
+    public void defend(Game game,int myPlayerNumber,int victimPlayerNumber){
     }
 }

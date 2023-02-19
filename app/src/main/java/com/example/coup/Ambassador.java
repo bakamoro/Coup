@@ -14,7 +14,7 @@ public class Ambassador extends Card{
         game.setLastAction(Actions.ambassador_block_steal_2_coins);
     }
     @Override
-    public void defend(Game game,int myPlayerNumber){
+    public void defend(Game game,int myPlayerNumber,int victimPlayerNumber){
         game.getPlayer(myPlayerNumber).addCards(game.TakeTwoCards());
         game.setLastAction(Actions.ambassador_take_2_cards);
     }

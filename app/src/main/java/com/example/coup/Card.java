@@ -27,7 +27,7 @@ public abstract class Card {
 
     abstract void attack(Game game,int myPlayerNumber,int victimPlayerNumber);
 
-    abstract void defend(Game game,int myPlayerNumber);
+    abstract void defend(Game game,int myPlayerNumber,int victimPlayerNumber);
 
 }
 
