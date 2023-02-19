@@ -38,6 +38,7 @@ public class CoupView extends View {
     Game game;
     private boolean isStartUp = true;
     private boolean TimerCalled = true;
+    private boolean BankButtonShown = false;
     private int victimPlayerNumber;
     private int time = 10;
     private Paint p = new Paint();
@@ -144,6 +145,8 @@ public class CoupView extends View {
             }
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), redId);
             ThisCanvas.drawBitmap(bitmap, null, new Rect(padding * 2, padding * 2, padding * 2 + card_width, padding * 2 + card_height), null);
+
+            BankButtonShown = false;
         }
     }
 
@@ -281,11 +284,15 @@ public class CoupView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             if(cardByPosition((int)event.getX(),(int)event.getY())){
+                BankButtonShown = false;
                 invalidate();
                 return true;
             }
             if(bankIsPressed((int)event.getX(),(int)event.getY())){
                 drawBankDetails = true;
+                if(myTurn){
+                    BankButtonShown = true;
+                }
                 invalidate();
                 return true;
             }
@@ -305,10 +312,11 @@ public class CoupView extends View {
         //bank's buttons
         //1 coin button
         if(x>= left && x<= right && y>= top && y<= bottom){
-            if(game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() > 9){
-                Toast.makeText(getContext(),"You have 10 coins You can't have more coins",Toast.LENGTH_SHORT).show();
+            if(BankButtonShown) {
+                if (game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() > 9) {
+                    Toast.makeText(getContext(), "You have 10 coins You can't have more coins", Toast.LENGTH_SHORT).show();
+                } else game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().addCoins(1);
             }
-            else game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().addCoins(1);
             return true;
         }
         left = padding * 6 + card_height + card_width;
@@ -317,10 +325,11 @@ public class CoupView extends View {
         bottom = (height - width) / 2 - padding;
         //2 coin button
         if(x>= left && x<= right && y>= top && y<= bottom){
-            if(game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() > 8){
-                Toast.makeText(getContext(),"You can't have more coins than 10",Toast.LENGTH_SHORT).show();
+            if(BankButtonShown) {
+                if (game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().getNumber() > 8) {
+                    Toast.makeText(getContext(), "You can't have more coins than 10", Toast.LENGTH_SHORT).show();
+                } else game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().addCoins(2);
             }
-            else game.getPlayer(myPlayerNumber).getPersonalBank().getCoins().addCoins(2);
             return true;
         }
 
