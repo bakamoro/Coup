@@ -2,6 +2,7 @@ package com.example.coup;
 
 public class Player {
     private PersonalBank personalBank;
+    private String NameOfPlayer;
     private Card[] cards = new Card[4];
     private boolean isTurn;
     public Player(PersonalBank personalBank, Card card1, Card card2, boolean isTurn){
@@ -34,5 +35,13 @@ public class Player {
 
     public void setPersonalBank(PersonalBank personalBank) {
         this.personalBank = personalBank;
+    }
+
+    public String getNameOfPlayer() {
+        return NameOfPlayer;
+    }
+
+    public void setNameOfPlayer(String nameOfPlayer) {
+        NameOfPlayer = nameOfPlayer;
     }
 }
