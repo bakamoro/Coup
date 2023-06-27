@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -40,9 +41,11 @@ public class CoupView extends View {
     private boolean TimerCalled = true;
     private boolean BankButtonShown = false;
     private int victimPlayerNumber;
-    private int time = 10;
+    private int time = 15;
     private Paint p = new Paint();
 
+    private int DrawnCards = 0;
+    private int[] return2Cards = {-1,-1};
 
     public CoupView(Context context) {
         super(context);
@@ -54,10 +57,10 @@ public class CoupView extends View {
         ThisCanvas = canvas;
         updateMoves();
         if(game!=null) {
-            if(TimerCalled){
-                drawTimer();
-//                TimerCalled = false;
-            }
+//            if(TimerCalled){
+//                drawTimer();
+////                TimerCalled = false;
+//            }
             drawBoard();
             drawBackCards();
             drawCards();
@@ -68,23 +71,27 @@ public class CoupView extends View {
         }
     }
 
+
     private void drawTimer() {
-        if(CardDetailsType == null && time >= 0) {
-            if(time == 10){
-                p.setColor(Color.WHITE);
+
+        Paint paint = new Paint();
+        paint.setColor(Color.YELLOW);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        paint.setTextSize(150);
+        if(time <= 5){
+            paint.setColor(Color.RED);
+        }
+
+        try {
+            ThisCanvas.drawText("" + time--, width - 200, (height-width)/2-padding, paint);
+            Thread.sleep(1000);
+            if(time>=0) {
+                invalidate();
             }
-            if(time == 5){
-                p.setColor(Color.RED);
-            }
-            p.setTextSize(40);
-            p.setTextAlign(Paint.Align.CENTER);
-            ThisCanvas.drawText("00:0" + time--, width / 2, 100, p);
-            try {
-                Thread.sleep(900);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            invalidate();
+            else time = 15;
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -170,7 +177,7 @@ public class CoupView extends View {
     }
 
     private void drawCards() {
-        int card_width = (width-6*2*padding)/5 , card_height = height - (height-width)/2 -width -padding*6 ;
+        int card_width = (width-6*2*padding)/5 , card_height = height - (height-width)/2 -width -padding*6;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.captain);
         ThisCanvas.drawBitmap(bitmap,null,new Rect(padding*2 ,height-padding*3-card_height ,padding*2 + card_width,height-padding*3),null);
 
@@ -273,16 +280,44 @@ public class CoupView extends View {
         drawMyCards();
     }
     private void drawMyCards(){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), game.getPlayer(myPlayerNumber).getCards()[0].getResId());
-        ThisCanvas.drawBitmap(bitmap,null,new Rect(width/2-padding - back_card_width,height-(height-width)/2-back_card_height-padding,width/2-padding ,height-(height-width)/2-padding),null);
+        Bitmap bitmap;
+        if(return2Cards[0] != 0) {
+            //left card
+            bitmap = BitmapFactory.decodeResource(getResources(), game.getPlayer(myPlayerNumber).getCards()[0].getResId());
+            ThisCanvas.drawBitmap(bitmap, null, new Rect(width / 2 - padding - back_card_width, height - (height - width) / 2 - back_card_height - padding, width / 2 - padding, height - (height - width) / 2 - padding), null);
+        }
+        if(return2Cards[0] != 1) {
+            //right card
+            bitmap = BitmapFactory.decodeResource(getResources(), game.getPlayer(myPlayerNumber).getCards()[1].getResId());
+            ThisCanvas.drawBitmap(bitmap, null, new Rect(width / 2 + padding, height - (height - width) / 2 - back_card_height - padding, width / 2 + back_card_width + padding, height - (height - width) / 2 - padding), null);
+        }
 
-        bitmap = BitmapFactory.decodeResource(getResources(),game.getPlayer(myPlayerNumber).getCards()[1].getResId());
-        ThisCanvas.drawBitmap(bitmap,null,new Rect(width/2+padding ,height-(height-width)/2-back_card_height-padding,width/2+back_card_width+padding,height-(height-width)/2-padding),null);
+        if(game.getPlayer(myPlayerNumber).getCards()[2]!=null) {
+            if(return2Cards[0] != 2) {
+                //right right card
+                bitmap = BitmapFactory.decodeResource(getResources(), game.getPlayer(myPlayerNumber).getCards()[2].getResId());
+                ThisCanvas.drawBitmap(bitmap, null, new Rect(width / 2 + back_card_width + padding * 3, height - (height - width) / 2 - back_card_height - padding, width / 2 + back_card_width * 2 + padding * 3, height - (height - width) / 2 - padding), null);
+            }
+            if(return2Cards[0] != 3) {
+                //left left card
+                if (game.getPlayer(myPlayerNumber).getCards()[3] != null) {
+                    bitmap = BitmapFactory.decodeResource(getResources(), game.getPlayer(myPlayerNumber).getCards()[3].getResId());
+                    ThisCanvas.drawBitmap(bitmap, null, new Rect(width / 2 - padding * 3 - back_card_width * 2, height - (height - width) / 2 - back_card_height - padding, width / 2 - padding * 3 - back_card_width, height - (height - width) / 2 - padding), null);
+                }
+            }
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN){
+            if(DrawnCards != 0){
+                if(eliminateCards((int)event.getX(),(int)event.getY())) {
+                    invalidate();
+                }
+                else Toast.makeText(getContext(),"please pick 2 cards to eliminate",Toast.LENGTH_SHORT).show();
+                return true;
+            }
             if(cardByPosition((int)event.getX(),(int)event.getY())){
                 BankButtonShown = false;
                 invalidate();
@@ -302,6 +337,88 @@ public class CoupView extends View {
             }
         }
         return true;
+    }
+
+    private boolean eliminateCards(int x, int y) {
+
+        int top = (height-(height-width)/2-back_card_height-padding);
+        int bottom = height-(height-width)/2-padding;
+
+
+        int left = width/2-padding - back_card_width;
+        int right = width/2-padding;
+        //left button
+        if(x>= left && x<= right && y>= top && y<= bottom){
+            if (DrawnCards == 2){
+                return2Cards[0] = 0;
+            }
+            if (DrawnCards == 1){
+                return2Cards[1] = 0;
+            }
+            DrawnCards--;
+            if(DrawnCards!=0) return true;
+        }
+
+        left = width/2+padding;
+        right = width/2+back_card_width+padding;
+        //right button
+        if(x>= left && x<= right && y>= top && y<= bottom){
+            if (DrawnCards == 2){
+                return2Cards[0] = 1;
+            }
+            if (DrawnCards == 1){
+                return2Cards[1] = 1;
+            }
+            DrawnCards--;
+            if(DrawnCards!=0) return true;
+        }
+
+        left = width/2+back_card_width+padding*3;
+        right = width/2+back_card_width*2+padding*3;
+        //right right button
+        if(x>= left && x<= right && y>= top && y<= bottom){
+            if (DrawnCards == 2){
+                return2Cards[0] = 2;
+            }
+            if (DrawnCards == 1){
+                return2Cards[1] = 2;
+            }
+            DrawnCards--;
+            if(DrawnCards!=0) return true;
+        }
+
+        left = width/2-padding*3 - back_card_width*2;
+        right = width/2-padding*3 - back_card_width;
+        //left left button
+        if(x>= left && x<= right && y>= top && y<= bottom){
+            if(game.getPlayer(myPlayerNumber).getCards()[3]!=null){
+                if (DrawnCards == 2){
+                    return2Cards[0] = 3;
+                }
+                if (DrawnCards == 1){
+                    return2Cards[1] = 3;
+                }
+                DrawnCards--;
+                if(DrawnCards!=0) return true;
+            }
+        }
+        if (DrawnCards == 0){
+            game.returnTwoCards(game.getPlayer(myPlayerNumber).getCards()[return2Cards[0]],game.getPlayer(myPlayerNumber).getCards()[return2Cards[1]]);
+            game.getPlayer(myPlayerNumber).getCards()[return2Cards[1]] = null;
+            game.getPlayer(myPlayerNumber).getCards()[return2Cards[0]] = null;
+            for (int i = 0,z = 0;i<4;i++){
+                if(game.getPlayer(myPlayerNumber).getCards()[i] != null){
+                    game.getPlayer(myPlayerNumber).getCards()[z] = game.getPlayer(myPlayerNumber).getCards()[i];
+                    if(z!=i) {
+                        game.getPlayer(myPlayerNumber).getCards()[i] = null;
+                    }
+                    z++;
+                }
+            }
+            return2Cards[0] = return2Cards[1] = -1;
+            return  true;
+        }
+        return false;
     }
 
     private boolean isButtonPressed(int x, int y) {
@@ -354,7 +471,8 @@ public class CoupView extends View {
                 }
                 case Ambassador: {
                     Ambassador ambassador = new Ambassador();
-                    ambassador.attack(game,myPlayerNumber,victimPlayerNumber);
+                    ambassador.defend(game,myPlayerNumber,victimPlayerNumber);
+                    DrawnCards = 2;
                     break;
                 }
                 case Captain:
@@ -385,7 +503,7 @@ public class CoupView extends View {
                 }
                 case Ambassador: {
                     Ambassador ambassador = new Ambassador();
-                    ambassador.defend(game,myPlayerNumber,victimPlayerNumber);
+                    ambassador.attack(game,myPlayerNumber,victimPlayerNumber);
                     break;
                 }
                 case Contessa:
